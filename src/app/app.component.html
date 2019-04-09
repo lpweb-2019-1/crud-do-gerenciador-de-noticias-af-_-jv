@@ -1,0 +1,162 @@
+<div class="container">
+  <h1>Gerenciador de notícias</h1>
+  <h2>Notícias recentes</h2>
+  <p>Clique no título da notícia para expandir</p>
+  <div>
+  <ul>
+    <li *ngFor="let noticia of noticias">
+        <p (click)="mostrar(noticia)">{{ noticia.titulo }}</p>
+        
+        <p *ngIf="noticia.visivel">
+          Conteúdo: {{ noticia.conteudo }}<br>
+          Data de publicação: {{ noticia.data }} <br>
+          Noticia publicada: {{ noticia.publicada }}<br>
+          Categoria: {{ noticia.categoria }}<br>
+          Tags: {{ noticia.tags }}<br>
+          Editoria: {{ noticia.editoria }}<br>
+          <br>
+          <button class="btn btn-primary"(click)="fechar(noticia)">Fechar</button>
+          <button (click)="excluir(noticia)">Excluir</button>
+
+          <!-- BOTÃO PARA EDITAR -->
+          <button (click)="editar(noticia)">Editar</button>
+          <!-- FIM -->
+
+          <!-- FORMULARIO PARA EDIÇÃO DE NOTICIA -->
+          <div *ngIf="noticia.editarAtri">
+              <h2>Editar Notícia</h2>
+              <form #editar="ngForm" (submit)="salvar_editado()">
+                  <div class="form-group">
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" name="titulo" [(ngModel)]="titulo" class="form-control" required>
+                    <small class="form-text text-muted"> Título completo da notícia.</small>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="conteudo">Conteúdo:</label>
+                    <textarea id="conteudo" name="conteudo" cols="80" rows="5" [(ngModel)]="conteudo" class="form-control" required></textarea>
+                  </div>
+                
+                  <div>
+                    <label for="data">Data:</label>
+                    <input type="date" id="data" name="data" [(ngModel)]="data">
+                  </div>
+                <br>
+                  <div>
+                    <label for="publicada">Publicação:</label>
+                    <input type="checkbox" id="publicada" name="publicada" [(ngModel)]="publicada">  Publicada
+                  </div>
+                <br>
+                  <div>
+                    <label for="categoria">Categoria:</label>
+                    <select id="categoria" name="categoria" [(ngModel)]="categoria">
+                      <option value="administracao">Administração</option>
+                      <option value="automoveis">Automóveis</option>
+                      <option value="esporte">Esporte</option>
+                      <option value="financas">Finanças</option>
+                      <option value="jogos">Jogos</option>
+                      <option value="tecnologia">Tecnologia</option>
+                      <option value="tecnologia">Outro</option>
+                    </select>
+                  </div>
+                
+                  <div>
+                    <label for="categoria">Tags:</label>
+                    Segure Ctrl (Windows) / Command (Mac) para selecionar múltiplas opções. <br>
+                    <select multiple id="tags" name="tags" [(ngModel)]="tags" required>
+                      <option value="Tag1">Tag1</option>
+                      <option value="Tag2">Tag2</option>
+                      <option value="Tag3">Tag3</option>
+                      <option value="Tag4">Tag4</option>
+                      <option value="Tag5">Tag5</option>
+                      <option value="Tag6">Tag6</option>
+                      <option value="Tag7">Tag7</option>
+                    </select>
+                  </div>
+                
+                  <div>
+                    <label for="Editoria">Editoria:</label><br>
+                    <input type="radio" id="politica" name="editoria" value="politica">  Política <br>
+                    <input type="radio" id="economia" name="editoria" value="economia">  Economia<br>
+                    <input type="radio" id="esporte" name="editoria" value="esporte"> Esporte <br>
+                    <input type="radio" id="entretenimento" name="editoria" value="entretenimento">  Entretenimento <br>
+                  </div>
+                
+                  <div>
+                    <button type="submit" [disabled]="!editar.form.valid">Salvar</button>
+                    <button type="reset" formnovalidate>Limpar</button>
+                  </div>
+              </form>
+            </div>
+            <!-- FIM -->
+        
+    </li>
+  </ul>
+  </div>
+
+  <h2><i class="fa fa-plus-circle"></i> Cadastrar notícia</h2>
+  <form #cadastro="ngForm" (submit)="salvar()">
+    <div class="form-group">
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" name="titulo" [(ngModel)]="titulo" class="form-control" required>
+      <small class="form-text text-muted">Título completo de noticia.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="conteudo">Conteúdo:</label>
+      <textarea id="conteudo" name="conteudo" cols="80" rows="5" [(ngModel)]="conteudo" class="form-control" required></textarea>
+    </div>
+
+    <div>
+      <label for="data">Data:</label>
+      <input type="date" id="data" name="data" [(ngModel)]="data">
+    </div>
+  <br>
+    <div>
+      <label for="publicada">Publicação:</label>
+      <input type="checkbox" id="publicada" name="publicada" [(ngModel)]="publicada">  Publicada 
+    </div>
+  <br>
+    <div>
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" name="categoria" [(ngModel)]="categoria">
+        <option value="administracao">Administração</option>
+        <option value="automoveis">Automóveis</option>
+        <option value="esporte">Esporte</option>
+        <option value="financas">Finanças</option>
+        <option value="jogos">Jogos</option>
+        <option value="tecnologia">Tecnologia</option>
+        <option value="tecnologia">Outro</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="categoria">Tags:</label>
+      Segure Ctrl (Windows) / Command (Mac) para selecionar múltiplas opções. <br>
+      <select multiple id="tags" name="tags" [(ngModel)]="tags" required>
+        <option value="Tag1">Tag1</option>
+        <option value="Tag2">Tag2</option>
+        <option value="Tag3">Tag3</option>
+        <option value="Tag4">Tag4</option>
+        <option value="Tag5">Tag5</option>
+        <option value="Tag6">Tag6</option>
+        <option value="Tag7">Tag7</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="Editoria">Editoria:</label><br>
+      <input type="radio" id="politica" name="editoria" value="politica"> Política <br>
+      <input type="radio" id="economia" name="editoria" value="economia">  Economia<br>
+      <input type="radio" id="esporte" name="editoria" value="esporte"> Esporte <br>
+      <input type="radio" id="entretenimento" name="editoria" value="entretenimento">  Entretenimento <br>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="!cadastro.form.valid"><i class="fa fa-save"></i> Salvar</button>
+      <button type="reset" formnovalidate>Limpar</button>
+    </div>
+  </form>
+</div>
+<router-outlet></router-outlet>
+
